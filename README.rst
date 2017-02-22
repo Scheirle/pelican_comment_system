@@ -57,5 +57,5 @@ deactivated (as expected).
 Change Log
 ----------
 
-The change log can be found in the `CHANGELOG.md <./CHANGELOG.md>`__
+The change log can be found in the `CHANGELOG.rst <./CHANGELOG.rst>`__
 file.
