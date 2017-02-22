@@ -1,5 +1,5 @@
-Pelican Comment System
-======================
+Pelican Comment System |pypi-version|
+=====================================
 
 Pelican Comment System allows you to add static comments to your
 articles.
@@ -69,3 +69,7 @@ Change Log
 
 The change log can be found in the `CHANGELOG.rst <./CHANGELOG.rst>`__
 file.
+
+.. |pypi-version| image:: https://img.shields.io/pypi/v/pelican_comment_system.svg
+   :target: https://pypi.python.org/pypi/pelican_comment_system
+   :alt: PyPI: the Python Package Index
