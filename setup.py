@@ -17,15 +17,23 @@ def get_version(filename="pelican_comment_system/__init__.py"):
                 return m.group(1)
 
 
+def get_long_description(absolute_url):
+    readme = open(os.path.join(base_dir, "README.rst")).read()
+    # Fix relative links
+    readme = readme.replace("<doc/", "<" + absolute_url + "/doc/")
+    readme = readme.replace("<./", "<" + absolute_url + "/")
+    # TODO: remove change log section from readme
+    return "\n\n".join([readme, open(os.path.join(base_dir, "CHANGELOG.rst")).read()])
+
+base_url = "https://github.com/Scheirle/pelican_comment_system"
 setup(
     name="pelican_comment_system",
     version=get_version(),
     description="Allows you to add static comments to your articles on your Pelican blog.",
-    long_description="\n\n".join([open(os.path.join(base_dir, "README.rst")).read(),
-                                  open(os.path.join(base_dir, "CHANGELOG.rst")).read()]),
+    long_description=get_long_description(base_url + "/tree/v" + get_version()),
     author="Bernhard Scheirle",
     author_email="bernhard+python@scheirle.de",
-    url="https://github.com/Scheirle/pelican_comment_system",
+    url=base_url,
     packages=['pelican_comment_system',
               'pelican_comment_system.identicon'],
     include_package_data=True,
