@@ -4,6 +4,20 @@ Change Log
 All notable changes to this project will be documented in this file.
 This project adheres to `Semantic Versioning <http://semver.org/>`__.
 
+X.X.X – 201X-00-00
+------------------
+\
+
+Added
+~~~~~
+
+Changed
+~~~~~~~
+
+Fixed
+~~~~~
+
+
 1.4.0 – 2017-02-20
 ------------------
 \
