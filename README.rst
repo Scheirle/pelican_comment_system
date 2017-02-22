@@ -35,6 +35,16 @@ Instructions
 -  `Import existing comments <doc/import.md>`__
 -  `Avatars and identicons <doc/avatars.md>`__
 -  `Comment Atom feed <doc/feed.md>`__
+-  `[Developer] How to do a release <doc/how-to-release.md>`__
+
+PyPi
+------------
+The Pelican Comment System is now also in the Python Package Index and can easily installed via:
+
+::
+
+    pip install pelican_comment_system
+
 
 Requirements
 ------------

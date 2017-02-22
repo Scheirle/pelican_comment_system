@@ -4,7 +4,7 @@ Change Log
 All notable changes to this project will be documented in this file.
 This project adheres to `Semantic Versioning <http://semver.org/>`__.
 
-1.4.0 - 2017-02-20
+1.4.0 – 2017-02-20
 ------------------
 
 Added
@@ -13,7 +13,7 @@ Added
 -  add ``setup.py`` to allow posting plugin to PyPI `PR
    #862 <https://github.com/getpelican/pelican-plugins/pull/862>`__
 
-1.3.0 - 2017-01-10
+1.3.0 – 2017-01-10
 ------------------
 
 Added
