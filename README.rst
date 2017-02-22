@@ -9,7 +9,7 @@ Comments are stored in files in formats that can be processed by Pelican
 file.
 
 Features
-~~~~~~~~
+--------
 
 -  Static comments for each article
 -  Replies to comments
