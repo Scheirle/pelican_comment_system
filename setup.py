@@ -25,7 +25,7 @@ setup(
                                   open(os.path.join(base_dir, "CHANGELOG.rst")).read()]),
     author="Bernhard Scheirle",
     # author_email="",
-    url="http://bernhard.scheirle.de/posts/2014/March/29/static-comments-via-email/",
+    url="https://github.com/Scheirle/pelican_comment_system",
     packages=['pelican_comment_system',
               'pelican_comment_system.identicon'],
     include_package_data=True,
@@ -36,7 +36,8 @@ setup(
     classifiers=[
         'Development Status :: 5 - Production/Stable',
         'Environment :: Console',
-        'License :: OSI Approved :: MIT License',
+        'License :: OSI Approved :: GNU General Public License v3 or later (GPLv3+)',
+        'Operating System :: OS Independent',
         'Programming Language :: Python',
         'Programming Language :: Python :: 2',
         'Programming Language :: Python :: 3',
