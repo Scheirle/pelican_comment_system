@@ -21,7 +21,7 @@ setup(
     name="pelican_comment_system",
     version=get_version(),
     description="Allows you to add static comments to your articles on your Pelican blog.",
-    long_description="\n\n".join([open(os.path.join(base_dir, "Readme.rst")).read(),
+    long_description="\n\n".join([open(os.path.join(base_dir, "README.rst")).read(),
                                   open(os.path.join(base_dir, "CHANGELOG.rst")).read()]),
     author="Bernhard Scheirle",
     # author_email="",
