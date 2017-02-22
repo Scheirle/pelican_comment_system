@@ -1,3 +1,4 @@
+#!/usr/bin/env python
 
 import os
 import re
@@ -24,6 +25,7 @@ def get_long_description(absolute_url):
     readme = readme.replace("<./", "<" + absolute_url + "/")
     # TODO: remove change log section from readme
     return "\n\n".join([readme, open(os.path.join(base_dir, "CHANGELOG.rst")).read()])
+
 
 base_url = "https://github.com/Scheirle/pelican_comment_system"
 setup(
