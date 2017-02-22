@@ -24,7 +24,7 @@ setup(
     long_description="\n\n".join([open(os.path.join(base_dir, "README.rst")).read(),
                                   open(os.path.join(base_dir, "CHANGELOG.rst")).read()]),
     author="Bernhard Scheirle",
-    # author_email="",
+    author_email="bernhard+python@scheirle.de",
     url="https://github.com/Scheirle/pelican_comment_system",
     packages=['pelican_comment_system',
               'pelican_comment_system.identicon'],
