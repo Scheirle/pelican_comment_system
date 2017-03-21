@@ -1,12 +1,11 @@
-Pelican Comment System |pypi-version|
-=====================================
+Pelican Comment System |shields-pypi-version| |shields-maintenance| |shields-plugin|
+====================================================================================
 
-Pelican Comment System allows you to add static comments to your
-articles.
+Pelican Comment System is a plugin for `pelican <https://blog.getpelican.com>`__ and
+allows you to add **static** comments to your articles.
 
 Comments are stored in files in formats that can be processed by Pelican
-(e.g., Markdown, reStructuredText). Each comment resides in its own
-file.
+(e.g., Markdown, reStructuredText). Each comment resides in its own file.
 
 Features
 --------
@@ -70,6 +69,11 @@ Change Log
 The change log can be found in the `CHANGELOG.rst <./CHANGELOG.rst>`__
 file.
 
-.. |pypi-version| image:: https://img.shields.io/pypi/v/pelican_comment_system.svg
+.. |shields-pypi-version| image:: https://img.shields.io/pypi/v/pelican_comment_system.svg
    :target: https://pypi.python.org/pypi/pelican_comment_system
    :alt: PyPI: the Python Package Index
+.. |shields-maintenance| image:: https://img.shields.io/maintenance/yes/2017.svg
+   :alt: Maintenance shield
+.. |shields-plugin| image:: https://img.shields.io/badge/Pelican-Plugin-green.svg
+   :target: https://blog.getpelican.com
+   :alt: Pelican plugin
