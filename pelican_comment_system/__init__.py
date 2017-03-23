@@ -3,7 +3,7 @@
 Pelican Comment System
 ======================
 
-A Pelican plugin, which allows you to add comments to your articles.
+A Pelican plugin, which allows you to add static comments to your articles.
 
 Author: Bernhard Scheirle
 """
@@ -11,10 +11,8 @@ from __future__ import unicode_literals
 import logging
 import os
 import copy
-
-logger = logging.getLogger(__name__)
-
 from itertools import chain
+
 from pelican import signals
 from pelican.readers import Readers
 from pelican.writers import Writer
@@ -22,65 +20,85 @@ from pelican.writers import Writer
 from . comment import Comment
 from . import avatars
 
-
 __version__ = "1.4.0"
 
+logger = logging.getLogger(__name__)
+
+PCS_KEY = 'PELICAN_COMMENT_SYSTEM'
 
 _all_comments = []
 _pelican_writer = None
 _pelican_obj = None
 
 
-def setdefault(pelican, settings):
+def on_initialized(pelican):
+    '''
+    :type pelican: Pelican
+
+    Executed after the main pelican object initialized
+    (After plugin registration).
+
+    Sets the default configuration for this plugin.
+    '''
     from pelican.settings import DEFAULT_CONFIG
-    for key, value in settings:
-        DEFAULT_CONFIG.setdefault(key, value)
 
-    if not pelican:
-        return
+    default_pcs_config = {
+        'DIR': 'comments',
+        'IDENTICON_OUTPUT_PATH': 'images/identicon',
+        'IDENTICON_DATA': (),
+        'IDENTICON_SIZE': 72,
+        'AUTHORS':  {},
+        'FEED':     os.path.join('feeds', 'comment.%s.atom.xml'),
+        'FEED_ALL': os.path.join('feeds', 'comments.all.atom.xml')
+    }
 
-    for key, value in settings:
-        pelican.settings.setdefault(key, value)
-
-
-def pelican_initialized(pelican):
-    from pelican.settings import DEFAULT_CONFIG
-    settings = [
-        ('PELICAN_COMMENT_SYSTEM', False),
-        ('PELICAN_COMMENT_SYSTEM_DIR', 'comments'),
-        ('PELICAN_COMMENT_SYSTEM_IDENTICON_OUTPUT_PATH', 'images/identicon'),
-        ('PELICAN_COMMENT_SYSTEM_IDENTICON_DATA', ()),
-        ('PELICAN_COMMENT_SYSTEM_IDENTICON_SIZE', 72),
-        ('PELICAN_COMMENT_SYSTEM_AUTHORS', {}),
-        ('PELICAN_COMMENT_SYSTEM_FEED', os.path.join('feeds', 'comment.%s.atom.xml')),
-        ('PELICAN_COMMENT_SYSTEM_FEED_ALL', os.path.join('feeds', 'comments.all.atom.xml')),
+    default_root_config = [
         ('COMMENT_URL', '#comment-{slug}')
     ]
 
-    setdefault(pelican, settings)
+    # set default pcs config; merge with user specified config if necessary
+    DEFAULT_CONFIG.setdefault(PCS_KEY, default_pcs_config)
+    pelican.settings.setdefault(PCS_KEY, default_pcs_config)
 
-    DEFAULT_CONFIG['PAGE_EXCLUDES'].append(
-        DEFAULT_CONFIG['PELICAN_COMMENT_SYSTEM_DIR'])
-    DEFAULT_CONFIG['ARTICLE_EXCLUDES'].append(
-        DEFAULT_CONFIG['PELICAN_COMMENT_SYSTEM_DIR'])
-    pelican.settings['PAGE_EXCLUDES'].append(
-        pelican.settings['PELICAN_COMMENT_SYSTEM_DIR'])
-    pelican.settings['ARTICLE_EXCLUDES'].append(
-        pelican.settings['PELICAN_COMMENT_SYSTEM_DIR'])
+    for key, value in default_pcs_config.items():
+        if key not in DEFAULT_CONFIG[PCS_KEY]:
+            DEFAULT_CONFIG[PCS_KEY][key] = value
+        if key not in pelican.settings[PCS_KEY]:
+            pelican.settings[PCS_KEY][key] = value
+
+    # set default root config
+    for key, value in default_root_config:
+        DEFAULT_CONFIG.setdefault(key, value)
+        pelican.settings.setdefault(key, value)
+
+    # exclude comment dir from pages and articles
+    exclude_default = DEFAULT_CONFIG[PCS_KEY]['DIR']
+    exclude_pelican = pelican.settings[PCS_KEY]['DIR']
+
+    DEFAULT_CONFIG.setdefault('PAGE_EXCLUDES',      []).append(exclude_default)
+    DEFAULT_CONFIG.setdefault('ARTICLE_EXCLUDES',   []).append(exclude_default)
+    pelican.settings.setdefault('PAGE_EXCLUDES',    []).append(exclude_pelican)
+    pelican.settings.setdefault('ARTICLE_EXCLUDES', []).append(exclude_pelican)
 
     global _pelican_obj
     _pelican_obj = pelican
 
 
-def initialize(article_generator):
+def on_article_generator_init(article_generator):
+    '''
+    :type article_generator: ArticlesGenerator
+
+    Executed in ArticlesGenerator::__init__
+
+    Initializes the avatars submodule and resets the plugin state in
+    autoreload mode.
+    '''
     avatars.init(
         article_generator.settings['OUTPUT_PATH'],
-        article_generator.settings[
-            'PELICAN_COMMENT_SYSTEM_IDENTICON_OUTPUT_PATH'],
-        article_generator.settings['PELICAN_COMMENT_SYSTEM_IDENTICON_DATA'],
-        article_generator.settings[
-            'PELICAN_COMMENT_SYSTEM_IDENTICON_SIZE'] / 3,
-        article_generator.settings['PELICAN_COMMENT_SYSTEM_AUTHORS'],
+        article_generator.settings[PCS_KEY]['IDENTICON_OUTPUT_PATH'],
+        article_generator.settings[PCS_KEY]['IDENTICON_DATA'],
+        article_generator.settings[PCS_KEY]['IDENTICON_SIZE'] / 3,
+        article_generator.settings[PCS_KEY]['AUTHORS'],
     )
 
     # Reset old states (autoreload mode)
@@ -90,7 +108,39 @@ def initialize(article_generator):
     _all_comments = []
 
 
+def on_article_generator_finalized(article_generator):
+    '''
+    :type article_generator: ArticlesGenerator
+
+    Executed at the end of ArticlesGenerator::generate_context
+    '''
+    for article in article_generator.articles:
+        process_comments(article_generator, article)
+
+
+def write_feed(gen, items, context, slug):
+    '''
+    :type gen: Generator
+    :type items: list[Comment]
+    :type context: dict(str, mixed)
+    :type slug: str
+
+    Generates a comment feed with the given items and for the article with
+    the slug: slug.
+    '''
+    if gen.settings[PCS_KEY]['FEED'] is None:
+        return
+
+    path = gen.settings[PCS_KEY]['FEED'] % slug
+    _pelican_writer.write_feed(items, context, path)
+
+
 def warn_on_slug_collision(items):
+    '''
+    :type items: list[Comment]
+
+    Logs a warning if there are multiple comments with the same slug.
+    '''
     slugs = {}
     for comment in items:
         if comment.slug not in slugs:
@@ -107,51 +157,24 @@ def warn_on_slug_collision(items):
                 logger.warning('    %s', x.source_path)
 
 
-def write_feed_all(gen, writer):
-    if gen.settings['PELICAN_COMMENT_SYSTEM'] is not True:
-        return
-    if gen.settings['PELICAN_COMMENT_SYSTEM_FEED_ALL'] is None:
-        return
+def mirror_to_translations(content):
+    '''
+    :type content: Content
 
-    context = copy.copy(gen.context)
-    context['SITENAME'] += " - All Comments"
-    context['SITESUBTITLE'] = ""
-    path = gen.settings['PELICAN_COMMENT_SYSTEM_FEED_ALL']
-
-    global _all_comments
-    _all_comments = sorted(_all_comments)
-    _all_comments.reverse()
-
-    for com in _all_comments:
-        com.title = com.article.title + " - " + com.title
-        com.override_url = com.article.url + com.url
-
-    writer.write_feed(_all_comments, context, path)
+    Copies the comments stats of the given content to its translations.
+    '''
+    for translation in content.translations:
+        translation.comments_count = content.comments_count
+        translation.comments = content.comments
 
 
-def write_feed(gen, items, context, slug):
-    if gen.settings['PELICAN_COMMENT_SYSTEM_FEED'] is None:
-        return
+def process_comments(gen, content):
+    '''
+    :type gen: Generator
+    :type content: Content
 
-    path = gen.settings['PELICAN_COMMENT_SYSTEM_FEED'] % slug
-    _pelican_writer.write_feed(items, context, path)
-
-
-def process_comments(article_generator):
-    for article in article_generator.articles:
-        add_static_comments(article_generator, article)
-
-
-def mirror_to_translations(article):
-    for translation in article.translations:
-        translation.comments_count = article.comments_count
-        translation.comments = article.comments
-
-
-def add_static_comments(gen, content):
-    if gen.settings['PELICAN_COMMENT_SYSTEM'] is not True:
-        return
-
+    Processes all comments for the given content object.
+    '''
     global _all_comments
 
     content.comments_count = 0
@@ -163,14 +186,15 @@ def add_static_comments(gen, content):
     context['SITEURL'] += "/" + content.url
     context['SITENAME'] += " - Comments: " + content.title
     context['SITESUBTITLE'] = ""
+    context[PCS_KEY + '__FORCE_SANE_DATE'] = content.date
 
-    folder = os.path.join(
+    comment_folder = os.path.join(
         gen.settings['PATH'],
-        gen.settings['PELICAN_COMMENT_SYSTEM_DIR'],
+        gen.settings[PCS_KEY]['DIR'],
         content.slug
     )
 
-    if not os.path.isdir(folder):
+    if not os.path.isdir(comment_folder):
         logger.debug("No comments found for: %s", content.slug)
         write_feed(gen, [], context, content.slug)
         return
@@ -179,20 +203,20 @@ def add_static_comments(gen, content):
     comments = []
     replies = []
 
-    for file in os.listdir(folder):
+    for file in os.listdir(comment_folder):
         name, extension = os.path.splitext(file)
         if extension[1:].lower() in reader.extensions:
-            com = reader.read_file(
-                base_path=folder, path=file,
+            comment = reader.read_file(
+                base_path=comment_folder, path=file,
                 content_class=Comment, context=context)
 
-            com.article = content
-            _all_comments.append(com)
+            comment.article = content
+            _all_comments.append(comment)
 
-            if hasattr(com, 'replyto'):
-                replies.append(com)
+            if hasattr(comment, 'replyto'):
+                replies.append(comment)
             else:
-                comments.append(com)
+                comments.append(comment)
 
     feed_items = sorted(comments + replies)
     feed_items.reverse()
@@ -226,21 +250,92 @@ def add_static_comments(gen, content):
     mirror_to_translations(content)
 
 
-def writeIdenticonsToDisk(gen, writer):
+def on_feed_generated(context, feed):
+    '''
+    :type context: dict(str, mixed)
+    :type feed: SyndicationFeed
+
+    Executed after a feed gets generated but befor it gets written to disk.
+
+    If the feed is a pcs feed and is empty set the date to a fixed date.
+    '''
+    force_date = context.get(PCS_KEY + '__FORCE_SANE_DATE', None)
+    if force_date is None:
+        return
+
+    if feed.num_items() <= 0:
+        # Monkey patch the feed to return a static date
+        # Fixes: https://github.com/getpelican/pelican-plugins/issues/780
+        feed.__dict__['latest_post_date'] = lambda: force_date
+
+
+def on_article_writer_finalized(gen, writer):
+    '''
+    :type gen: ArticlesGenerator
+    :type writer: Writer
+
+    Executed after all articles have been written.
+
+    Generates the avatars and writes the pcs all comment feed.
+    '''
     avatars.generateAndSaveMissingAvatars()
 
-
-def pelican_finalized(pelican):
-    if pelican.settings['PELICAN_COMMENT_SYSTEM'] is not True:
+    # Write FEED_ALL
+    if gen.settings[PCS_KEY]['FEED_ALL'] is None:
         return
+
+    context = copy.copy(gen.context)
+    context['SITENAME'] += " - All Comments"
+    context['SITESUBTITLE'] = ""
+    path = gen.settings[PCS_KEY]['FEED_ALL']
+
+    global _all_comments
+    _all_comments = sorted(_all_comments)
+    _all_comments.reverse()
+
+    for com in _all_comments:
+        com.title = com.article.title + " - " + com.title
+        com.override_url = com.article.url + com.url
+
+    writer.write_feed(_all_comments, context, path)
+
+
+def on_finalized(pelican):
+    '''
+    Executed just before pelican exits.
+
+    Prints the number of processed comments.
+    '''
     global _all_comments
     print('Processed %s comment(s)' % len(_all_comments))
 
 
 def register():
-    signals.initialized.connect(pelican_initialized)
-    signals.article_generator_init.connect(initialize)
-    signals.article_generator_finalized.connect(process_comments)
-    signals.article_writer_finalized.connect(writeIdenticonsToDisk)
-    signals.article_writer_finalized.connect(write_feed_all)
-    signals.finalized.connect(pelican_finalized)
+    '''Register the plugin only if required signals are available'''
+
+    signal_handlers_db = [
+        # (signal name,       optional signal, signal handler)
+        ('initialized',                 False, on_initialized),
+        ('article_generator_init',      False, on_article_generator_init),
+        ('article_generator_finalized', False, on_article_generator_finalized),
+        ('article_writer_finalized',    False, on_article_writer_finalized),
+        ('feed_generated',              True,  on_feed_generated),
+        ('finalized',                   True,  on_finalized)
+    ]
+
+    # check that all required signals are available
+    for name, optional, _ in signal_handlers_db:
+        if not hasattr(signals, name) and not optional:
+            logger.error(
+                'The pelican_comment_system plugin requires Pelican 3.4.0 '
+                'or later.')
+            logger.debug(('Missing Signal: {}').format(name))
+            return
+
+    # register all available signals (optionals may not be available)
+    for name, _, handler in signal_handlers_db:
+        if not hasattr(signals, name):
+            continue
+
+        sig = getattr(signals, name)
+        sig.connect(handler)
