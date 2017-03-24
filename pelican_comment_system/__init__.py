@@ -25,10 +25,28 @@ __version__ = "1.4.0"
 logger = logging.getLogger(__name__)
 
 PCS_KEY = 'PELICAN_COMMENT_SYSTEM'
+PCS_META_KEY = 'pcs'
 
 _all_comments = []
 _pelican_writer = None
 _pelican_obj = None
+
+
+def deep_set_default(root_dict, root_key, default_dict):
+    '''
+    :type root_dict: dict(mixed, mixed)
+    :type root_key: mixed
+    :type default_dict: dict(mixed, mixed)
+
+    root_dict.setdefault(root_key, default_dict),
+    but also considers child dicts.
+    '''
+    root_dict.setdefault(root_key, default_dict)
+    for key, value in default_dict.items():
+        if key not in root_dict[root_key]:
+            root_dict[root_key][key] = value
+        elif isinstance(value, dict):
+            deep_set_default(root_dict[root_key], key, value)
 
 
 def on_initialized(pelican):
@@ -49,7 +67,12 @@ def on_initialized(pelican):
         'IDENTICON_SIZE': 72,
         'AUTHORS':  {},
         'FEED':     os.path.join('feeds', 'comment.%s.atom.xml'),
-        'FEED_ALL': os.path.join('feeds', 'comments.all.atom.xml')
+        'FEED_ALL': os.path.join('feeds', 'comments.all.atom.xml'),
+        'DEFAULT_STATE': {
+            'Article': 'open',  # closed, hidden
+            'Page':    'open',
+            'Draft':   'closed',
+        }
     }
 
     default_root_config = [
@@ -57,14 +80,16 @@ def on_initialized(pelican):
     ]
 
     # set default pcs config; merge with user specified config if necessary
-    DEFAULT_CONFIG.setdefault(PCS_KEY, default_pcs_config)
-    pelican.settings.setdefault(PCS_KEY, default_pcs_config)
+    deep_set_default(DEFAULT_CONFIG,   PCS_KEY, default_pcs_config)
+    deep_set_default(pelican.settings, PCS_KEY, default_pcs_config)
+    # DEFAULT_CONFIG.setdefault(PCS_KEY, default_pcs_config)
+    # pelican.settings.setdefault(PCS_KEY, default_pcs_config)
 
-    for key, value in default_pcs_config.items():
-        if key not in DEFAULT_CONFIG[PCS_KEY]:
-            DEFAULT_CONFIG[PCS_KEY][key] = value
-        if key not in pelican.settings[PCS_KEY]:
-            pelican.settings[PCS_KEY][key] = value
+    # for key, value in default_pcs_config.items():
+    # if key not in DEFAULT_CONFIG[PCS_KEY]:
+    # DEFAULT_CONFIG[PCS_KEY][key] = value
+    # if key not in pelican.settings[PCS_KEY]:
+    # pelican.settings[PCS_KEY][key] = value
 
     # set default root config
     for key, value in default_root_config:
@@ -116,6 +141,16 @@ def on_article_generator_finalized(article_generator):
     '''
     for article in article_generator.articles:
         process_comments(article_generator, article)
+
+
+def on_page_generator_finalized(page_generator):
+    '''
+    :type page_generator: PagesGenerator
+
+    Executed at the end of PagesGenerator::generate_context
+    '''
+    for page in page_generator.pages:
+        process_comments(page_generator, page)
 
 
 def write_feed(gen, items, context, slug):
@@ -187,6 +222,31 @@ def process_comments(gen, content):
     context['SITENAME'] += " - Comments: " + content.title
     context['SITESUBTITLE'] = ""
     context[PCS_KEY + '__FORCE_SANE_DATE'] = content.date
+
+    # Load default state if not set by content
+    if not hasattr(content.metadata, PCS_META_KEY):
+        content_type = content.__class__.__name__
+        default_state_dict = context[PCS_KEY]['DEFAULT_STATE']
+        if hasattr(default_state_dict, content_type):
+            content.metadata[PCS_META_KEY] = default_state_dict[content_type]
+        else:
+            content.metadata[PCS_META_KEY] = 'open'
+
+    state = content.metadata[PCS_META_KEY].lower()
+    if state is 'open':
+        # Normal operation.
+        pass
+    elif state is 'closed':
+        # This state must be handled by the theme.
+        # Normal operation.
+        pass
+    elif state is 'hidden':
+        # This state must also be handled by the theme.
+        logger.debug("Comments are hidden for: %s", content.slug)
+        write_feed(gen, [], context, content.slug)
+        return
+    else:
+        assert(False)
 
     comment_folder = os.path.join(
         gen.settings['PATH'],
@@ -269,25 +329,23 @@ def on_feed_generated(context, feed):
         feed.__dict__['latest_post_date'] = lambda: force_date
 
 
-def on_article_writer_finalized(gen, writer):
+def on_finalized(pelican):
     '''
-    :type gen: ArticlesGenerator
-    :type writer: Writer
-
-    Executed after all articles have been written.
+    Executed just before pelican exits.
 
     Generates the avatars and writes the pcs all comment feed.
+    Prints the number of processed comments.
     '''
     avatars.generateAndSaveMissingAvatars()
 
     # Write FEED_ALL
-    if gen.settings[PCS_KEY]['FEED_ALL'] is None:
+    if pelican.settings[PCS_KEY]['FEED_ALL'] is None:
         return
 
-    context = copy.copy(gen.context)
+    context = copy.copy(pelican.context)
     context['SITENAME'] += " - All Comments"
     context['SITESUBTITLE'] = ""
-    path = gen.settings[PCS_KEY]['FEED_ALL']
+    path = pelican.settings[PCS_KEY]['FEED_ALL']
 
     global _all_comments
     _all_comments = sorted(_all_comments)
@@ -297,16 +355,8 @@ def on_article_writer_finalized(gen, writer):
         com.title = com.article.title + " - " + com.title
         com.override_url = com.article.url + com.url
 
-    writer.write_feed(_all_comments, context, path)
+    _pelican_writer.write_feed(_all_comments, context, path)
 
-
-def on_finalized(pelican):
-    '''
-    Executed just before pelican exits.
-
-    Prints the number of processed comments.
-    '''
-    global _all_comments
     print('Processed %s comment(s)' % len(_all_comments))
 
 
@@ -318,9 +368,9 @@ def register():
         ('initialized',                 False, on_initialized),
         ('article_generator_init',      False, on_article_generator_init),
         ('article_generator_finalized', False, on_article_generator_finalized),
-        ('article_writer_finalized',    False, on_article_writer_finalized),
+        ('page_generator_finalized',    False, on_page_generator_finalized),
         ('feed_generated',              True,  on_feed_generated),
-        ('finalized',                   True,  on_finalized)
+        ('finalized',                   False, on_finalized)
     ]
 
     # check that all required signals are available
