@@ -22,10 +22,10 @@ from . import avatars
 
 __version__ = "1.4.0"
 
-logger = logging.getLogger(__name__)
-
 PCS_KEY = 'PELICAN_COMMENT_SYSTEM'
 PCS_META_KEY = 'pcs'
+
+logger = logging.getLogger(__name__)
 
 _all_comments = []
 _pelican_writer = None
@@ -62,9 +62,11 @@ def on_initialized(pelican):
 
     default_pcs_config = {
         'DIR': 'comments',
-        'IDENTICON_OUTPUT_PATH': 'images/identicon',
-        'IDENTICON_DATA': (),
-        'IDENTICON_SIZE': 72,
+        'IDENTICON': {
+            'OUTPUT_PATH': 'images/identicon',
+            'DATA': (),
+            'SIZE': 72,
+        },
         'AUTHORS':  {},
         'FEED':     os.path.join('feeds', 'comment.%s.atom.xml'),
         'FEED_ALL': os.path.join('feeds', 'comments.all.atom.xml'),
@@ -82,14 +84,6 @@ def on_initialized(pelican):
     # set default pcs config; merge with user specified config if necessary
     deep_set_default(DEFAULT_CONFIG,   PCS_KEY, default_pcs_config)
     deep_set_default(pelican.settings, PCS_KEY, default_pcs_config)
-    # DEFAULT_CONFIG.setdefault(PCS_KEY, default_pcs_config)
-    # pelican.settings.setdefault(PCS_KEY, default_pcs_config)
-
-    # for key, value in default_pcs_config.items():
-    # if key not in DEFAULT_CONFIG[PCS_KEY]:
-    # DEFAULT_CONFIG[PCS_KEY][key] = value
-    # if key not in pelican.settings[PCS_KEY]:
-    # pelican.settings[PCS_KEY][key] = value
 
     # set default root config
     for key, value in default_root_config:
@@ -120,9 +114,9 @@ def on_article_generator_init(article_generator):
     '''
     avatars.init(
         article_generator.settings['OUTPUT_PATH'],
-        article_generator.settings[PCS_KEY]['IDENTICON_OUTPUT_PATH'],
-        article_generator.settings[PCS_KEY]['IDENTICON_DATA'],
-        article_generator.settings[PCS_KEY]['IDENTICON_SIZE'] / 3,
+        article_generator.settings[PCS_KEY]['IDENTICON']['OUTPUT_PATH'],
+        article_generator.settings[PCS_KEY]['IDENTICON']['DATA'],
+        article_generator.settings[PCS_KEY]['IDENTICON']['SIZE'] / 3,
         article_generator.settings[PCS_KEY]['AUTHORS'],
     )
 
@@ -246,7 +240,7 @@ def process_comments(gen, content):
         write_feed(gen, [], context, content.slug)
         return
     else:
-        assert(False)
+        assert(False, "Unknown state: %s" % state)
 
     comment_folder = os.path.join(
         gen.settings['PATH'],
@@ -342,10 +336,10 @@ def on_finalized(pelican):
     if pelican.settings[PCS_KEY]['FEED_ALL'] is None:
         return
 
-    context = copy.copy(pelican.context)
+    context = copy.copy(pelican.settings)
     context['SITENAME'] += " - All Comments"
     context['SITESUBTITLE'] = ""
-    path = pelican.settings[PCS_KEY]['FEED_ALL']
+    path = context[PCS_KEY]['FEED_ALL']
 
     global _all_comments
     _all_comments = sorted(_all_comments)
