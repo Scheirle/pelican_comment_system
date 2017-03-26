@@ -356,7 +356,6 @@ def on_finalized(pelican):
 
 def register():
     '''Register the plugin only if required signals are available'''
-
     signal_handlers_db = [
         # (signal name,       optional signal, signal handler)
         ('initialized',                 False, on_initialized),
