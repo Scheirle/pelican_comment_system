@@ -39,8 +39,8 @@ def assert_dir_equal(expected_dir, tmpdir):
         expected_file_path = os.path.join(expected_dir, file)
         tmp_file_path = os.path.join(tmpdir, file)
 
-        with open(expected_file_path, 'r', encoding='utf-8') as ef:
-            with open(tmp_file_path, 'r', encoding='utf-8') as tf:
+        with open(expected_file_path, 'r') as ef:
+            with open(tmp_file_path, 'r') as tf:
                 assert ef.read() == tf.read()
 
 
