@@ -1,5 +1,12 @@
 *~
+
+# Python
+*.pyc
+
+# Build pypi
 dist/
 *.egg-info
-*.pyc
 build/
+
+# pytest
+.cache/
