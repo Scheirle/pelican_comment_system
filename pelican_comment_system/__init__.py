@@ -218,29 +218,32 @@ def process_comments(gen, content):
     context[PCS_KEY + '__FORCE_SANE_DATE'] = content.date
 
     # Load default state if not set by content
-    if not hasattr(content.metadata, PCS_META_KEY):
+    if PCS_META_KEY not in content.metadata:
+        logger.debug("No PCS_META_KEY found in content: %s", content.slug)
         content_type = content.__class__.__name__
         default_state_dict = context[PCS_KEY]['DEFAULT_STATE']
-        if hasattr(default_state_dict, content_type):
+        if content_type in default_state_dict:
             content.metadata[PCS_META_KEY] = default_state_dict[content_type]
         else:
             content.metadata[PCS_META_KEY] = 'open'
 
     state = content.metadata[PCS_META_KEY].lower()
-    if state is 'open':
+    if state == 'open':
         # Normal operation.
+        logger.debug("Comments are open for: %s", content.slug)
         pass
-    elif state is 'closed':
+    elif state == 'closed':
         # This state must be handled by the theme.
         # Normal operation.
+        logger.debug("Comments are closed for: %s", content.slug)
         pass
-    elif state is 'hidden':
+    elif state == 'hidden':
         # This state must also be handled by the theme.
         logger.debug("Comments are hidden for: %s", content.slug)
         write_feed(gen, [], context, content.slug)
         return
     else:
-        assert(False, "Unknown state: %s" % state)
+        assert False, "Unknown state: %s" % state
 
     comment_folder = os.path.join(
         gen.settings['PATH'],
