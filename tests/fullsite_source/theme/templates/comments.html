@@ -6,7 +6,7 @@ All Comments: {{ object.comments_count}}
 
 Comments:
 {% for comment in object.comments recursive %}
-{{ comment.date }} | {{ comment.slug }}
+{{ comment.slug }}
 {% if comment.replies %}
 {{ loop(comment.replies) }}
 {% endif %}
