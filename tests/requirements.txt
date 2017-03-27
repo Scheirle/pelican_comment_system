@@ -1,4 +1,5 @@
 pytest
 pytest-catchlog
+markdown
 pillow
 feedgenerator>=1.9

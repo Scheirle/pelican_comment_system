@@ -13,5 +13,6 @@ env:
 install:
   - pip install -U pytest
   - pip install -q Pelican==$PELICAN_VERSION
+  - pelican --version
   - pip install -r tests/requirements.txt
 script: pytest -v
