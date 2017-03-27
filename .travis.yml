@@ -5,7 +5,13 @@ python:
   - "3.4"
   - "3.5"
   - "3.6"
+env:
+  - PELICAN_VERSION=3.4
+  - PELICAN_VERSION=3.5
+  - PELICAN_VERSION=3.6.3
+  - PELICAN_VERSION=3.7.1
 install:
   - pip install -U pytest
-  - pip install -r test_requirements.txt
-script: pytest
+  - pip install -q Pelican==$PELICAN_VERSION
+  - pip install -r tests/requirements.txt
+script: pytest -v

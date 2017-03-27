@@ -1,0 +1,4 @@
+pytest
+pytest-catchlog
+pillow
+feedgenerator>=1.9

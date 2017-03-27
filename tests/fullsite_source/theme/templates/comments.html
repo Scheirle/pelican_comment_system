@@ -1,0 +1,14 @@
+{% macro print_comments(object_name, object) %}
+{{ object_name }}: {{ object.slug }}
+State: {{ object.metadata['pcs'] }}
+Top level comments: {{ object.comments | count }}
+All Comments: {{ object.comments_count}}
+
+Comments:
+{% for comment in object.comments recursive %}
+{{ comment.date }} | {{ comment.slug }}
+{% if comment.replies %}
+{{ loop(comment.replies) }}
+{% endif %}
+{% endfor %}
+{% endmacro %}
