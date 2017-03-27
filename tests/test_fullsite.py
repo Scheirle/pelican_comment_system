@@ -6,7 +6,6 @@ from pelican import Pelican
 from pelican.settings import read_settings
 
 
-#logger = logging.getLogger(__name__)
 CURRENT_PATH = os.path.dirname(os.path.abspath(__file__))
 FULLSITE_SOURCE_PATH = os.path.join(CURRENT_PATH, 'fullsite_source')
 FULLSITE_EXPECTED_PATH = os.path.join(CURRENT_PATH, 'fullsite_expected')
@@ -36,6 +35,12 @@ def assert_dir_equal(expected_dir, tmpdir):
 
     assert expected_files == tmp_files
     for file in expected_files:
+        _, extension = os.path.splitext(file)
+        if extension[1:].lower() == 'xml':
+            # Skip xml (feed) files.
+            # The content is too different per python/pelican version, so we
+            # only check that they all exist.
+            continue
         expected_file_path = os.path.join(expected_dir, file)
         tmp_file_path = os.path.join(tmpdir, file)
 
