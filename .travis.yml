@@ -1,18 +1,54 @@
 language: python
 python:
   - "2.7"
-  - "3.3"
-  - "3.4"
-  - "3.5"
+#  - "3.3"
+#  - "3.4"
+#  - "3.5"
   - "3.6"
 env:
-  - PELICAN_VERSION=3.4
-  - PELICAN_VERSION=3.5
-  - PELICAN_VERSION=3.6.3
+#  - PELICAN_VERSION=3.4
+#  - PELICAN_VERSION=3.5
+#  - PELICAN_VERSION=3.6.3
   - PELICAN_VERSION=3.7.1
+matrix:
+  include:
+  - python: "3.6"
+    env: PELICAN_VERSION=3.7.1 DO_RELEASE=true
 install:
   - pip install -U pytest
   - pip install -q Pelican==$PELICAN_VERSION
   - pelican --version
   - pip install -r tests/requirements.txt
-script: pytest -v
+script:
+  - pytest -v
+after_success:
+  - ls -a
+deploy:
+  #- provider: pages
+    #skip_cleanup: true
+    #github_token: $GITHUB_TOKEN # Set in travis-ci.org dashboard
+    #local_dir: "TODO"
+    #on:
+      #branch: develop # master
+      #tags: false # true
+      #condition: $DO_RELEASE = true
+  - provider: pypi
+    server: https://testpypi.python.org/pypi
+    distributions: sdist bdist_wheel
+    user: "pcs-travis-bot"
+    password: $PYPI_PASSWORD
+    on:
+      branch: develop # master
+      tags: false # true
+      condition: $DO_RELEASE = true
+  - provider: releases
+    api_key: $GITHUB_TOKEN
+    file_glob: true
+    file: dist/*
+    skip_cleanup: true
+    on:
+      branch: develop # master
+      tags: false # true
+      condition: $DO_RELEASE = true
+after_deploy:
+  - ls -a
