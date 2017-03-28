@@ -20,7 +20,7 @@ from pelican.writers import Writer
 from . comment import Comment
 from . import avatars
 
-__version__ = "1.4.0"
+__version__ = "2.0.0-alpha.1"
 
 PCS_KEY = 'PELICAN_COMMENT_SYSTEM'
 PCS_META_KEY = 'pcs'
