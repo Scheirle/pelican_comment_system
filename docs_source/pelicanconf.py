@@ -30,7 +30,7 @@ TRANSLATION_FEED_ATOM = None
 TRANSLATION_FEED_RSS = None
 
 # Theme
-THEME = 'theme'
+# THEME = 'theme'
 # DIRECT_TEMPLATES = []
 
 # Plugins
