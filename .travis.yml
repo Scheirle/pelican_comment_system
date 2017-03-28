@@ -38,8 +38,8 @@ deploy:
     user: "pcs-travis-bot"
     password: $PYPI_PASSWORD
     on:
-      branch: develop # master
-      tags: false # true
+      branch: master
+      tags: true
       condition: $DO_RELEASE = true
   - provider: releases
     api_key: $GITHUB_TOKEN
@@ -47,8 +47,8 @@ deploy:
     file: dist/*
     skip_cleanup: true
     on:
-      branch: develop # master
-      tags: false # true
+      branch: master
+      tags: true
       condition: $DO_RELEASE = true
 after_deploy:
   - ls -a
