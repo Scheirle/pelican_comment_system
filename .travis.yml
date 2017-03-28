@@ -21,17 +21,18 @@ install:
   - pip install -r tests/requirements.txt
 script:
   - pytest -v
+  - docs_source/build_site.sh
 after_success:
   - ls -a
 deploy:
-  #- provider: pages
-    #skip_cleanup: true
-    #github_token: $GITHUB_TOKEN # Set in travis-ci.org dashboard
-    #local_dir: "TODO"
-    #on:
-      #branch: develop # master
-      #tags: false # true
-      #condition: $DO_RELEASE = true
+  - provider: pages
+    skip_cleanup: true
+    github_token: $GITHUB_TOKEN
+    local_dir: "docs_source/output"
+    on:
+      branch: develop # master
+      tags: false
+      condition: $DO_RELEASE = true
   - provider: pypi
     server: https://testpypi.python.org/pypi
     distributions: sdist bdist_wheel
