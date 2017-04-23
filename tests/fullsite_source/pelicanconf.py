@@ -38,3 +38,9 @@ DIRECT_TEMPLATES = []
 
 # Plugins
 PLUGINS = [pelican_comment_system]
+
+PELICAN_COMMENT_SYSTEM = {
+    'IDENTICON': {
+        'DATA': ()
+    }
+}
