@@ -22,8 +22,6 @@ install:
 script:
   - pytest -v
   - docs_source/build_site.sh
-after_success:
-  - ls -a
 deploy:
   - provider: pages
     skip_cleanup: true
@@ -51,5 +49,3 @@ deploy:
       branch: master
       tags: true
       condition: $DO_RELEASE = true
-after_deploy:
-  - ls -a

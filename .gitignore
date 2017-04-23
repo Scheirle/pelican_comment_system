@@ -8,5 +8,8 @@ dist/
 *.egg-info
 build/
 
+# Build docs
+docs_source/output/
+
 # pytest
 .cache/
