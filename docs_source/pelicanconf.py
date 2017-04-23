@@ -20,7 +20,7 @@ PAGE_PATHS = ['pages']
 # URLs
 RELATIVE_URLS = True
 # URL
-BASE_ARTICLE_URL        = 'blog/'
+BASE_ARTICLE_URL        = 'posts/'
 BASE_ARTICLE_URL_YEAR   = BASE_ARTICLE_URL + '{date:%Y}/'
 BASE_ARTICLE_URL_MONTH  = BASE_ARTICLE_URL_YEAR + '{date:%B}/'
 BASE_ARTICLE_URL_DAY    = BASE_ARTICLE_URL_MONTH + '{date:%d}/'
@@ -84,7 +84,7 @@ DISPLAY_PAGES_ON_MENU = False
 DISPLAY_CATEGORIES_ON_MENU = False
 MENUITEMS = (
     ('Home', SITEURL),
-    ('Blog/News', SITEURL + '/category/blog.html'),
+    ('Blog/News', SITEURL + '/category/blog/'),
     ('GitHub', 'https://github.com/Scheirle/pelican_comment_system'),
 )
 

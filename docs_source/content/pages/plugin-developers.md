@@ -7,4 +7,3 @@ pcs: hidden
 
 # Contributing guidelines
 Just do it!
-

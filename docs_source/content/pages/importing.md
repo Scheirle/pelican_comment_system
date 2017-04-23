@@ -11,7 +11,7 @@ The scripts to support this are found in the `import` directory.
 
 Blogger is good in that it will give you an export of everything, but the bad news is it's one giant XML file. XML is great if you're a computer, but a bit of a pain if you're a human. 
 
-The code I used to export my comments from Blogger is found at [blogger_comment_export.py](../import/blogger_comment_export.py).
+The code I used to export my comments from Blogger is found at [blogger_comment_export.py](https://github.com/Scheirle/pelican_comment_system/blob/master/import/blogger_comment_export.py).
 
 To use it
 yourself, you will need to first adjust the constants at the beginning of the 
