@@ -64,7 +64,7 @@ def on_initialized(pelican):
         'DIR': 'comments',
         'IDENTICON': {
             'OUTPUT_PATH': 'images/identicon',
-            'DATA': (),
+            'DATA': ('author',),
             'SIZE': 72,
         },
         'AUTHORS':  {},
