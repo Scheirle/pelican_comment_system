@@ -1,0 +1,117 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+        <meta charset="utf-8" />
+        <title>Closing or hidding comments</title>
+        <link rel="stylesheet" href="../../theme/css/main.css" />
+        <link rel="stylesheet" href="../../theme/css/tabs.css" />
+        <link href="https://scheirle.github.io/pelican_comment_system/feeds/all.atom.xml" type="application/atom+xml" rel="alternate" title="Pelican Comment System Atom Feed" />
+
+        <!--[if IE]>
+            <script src="https://html5shiv.googlecode.com/svn/trunk/html5.js"></script>
+        <![endif]-->
+</head>
+
+<body id="index" class="home">
+        <header id="banner" class="body">
+                <h1><a href="../../">Pelican Comment System </a></h1>
+                <nav><ul>
+                    <li><a href="https://scheirle.github.io/pelican_comment_system">Home</a></li>
+                    <li><a href="https://scheirle.github.io/pelican_comment_system/category/blog/">Blog/News</a></li>
+                    <li><a href="https://github.com/Scheirle/pelican_comment_system">GitHub</a></li>
+                </ul></nav>
+        </header><!-- /#banner -->
+<section id="content" class="body">
+    <h1 class="entry-title">Closing or hidding comments</h1>
+    
+    <p>On a per article/page basis you can decide to either show, close or hide the comment section.
+Just set the <code>pcs</code> meta tag to either <code>open</code> (default), <code>closed</code> or <code>hidden</code>.</p>
+<div class="tab"><button class="tablinks tabs-processor-id-0 default_open" onclick="openTab(event, 'tabs-processor-id-0', 'tabs-processor-id-1')">Open</button><button class="tablinks tabs-processor-id-0" onclick="openTab(event, 'tabs-processor-id-0', 'tabs-processor-id-2')">Closed</button><button class="tablinks tabs-processor-id-0" onclick="openTab(event, 'tabs-processor-id-0', 'tabs-processor-id-3')">Hidden</button></div>
+<div class="tabcontent tabs-processor-id-0" id="tabs-processor-id-1">
+<ul>
+<li>(Old) Comments <strong>are</strong> visible</li>
+<li>Visitors <strong>can</strong> post new comments</li>
+</ul>
+<p>Article/Page:</p>
+<table class="highlighttable"><tr><td class="linenos"><div class="linenodiv"><pre>1
+2</pre></div></td><td class="code"><div class="highlight"><pre><span></span><span class="n">Title</span><span class="o">:</span> <span class="n">My</span> <span class="n">Article</span> <span class="n">or</span> <span class="n">Page</span> <span class="n">Title</span>
+<span class="n">pcs</span><span class="o">:</span> <span class="n">open</span>
+</pre></div>
+</td></tr></table>
+
+<p>Example: <a href="../../posts/2017/March/27/article-open/">Article with open comments</a></p>
+</div>
+<div class="tabcontent tabs-processor-id-0" id="tabs-processor-id-2">
+<ul>
+<li>(Old) Comments <strong>are</strong> visible</li>
+<li>Visitors can <strong>not</strong> post new comments</li>
+</ul>
+<p>Article/Page:</p>
+<table class="highlighttable"><tr><td class="linenos"><div class="linenodiv"><pre>1
+2</pre></div></td><td class="code"><div class="highlight"><pre><span></span><span class="n">Title</span><span class="o">:</span> <span class="n">My</span> <span class="n">Article</span> <span class="n">or</span> <span class="n">Page</span> <span class="n">Title</span>
+<span class="n">pcs</span><span class="o">:</span> <span class="n">closed</span>
+</pre></div>
+</td></tr></table>
+
+<p>Example: <a href="../../posts/2017/March/27/article-closed/">Article with closed comments</a></p>
+</div>
+<div class="tabcontent tabs-processor-id-0" id="tabs-processor-id-3">
+<ul>
+<li>(Old) Comments are <strong>not</strong> visible</li>
+<li>Visitors can <strong>not</strong> post new comments</li>
+</ul>
+<p>Article/Page:</p>
+<table class="highlighttable"><tr><td class="linenos"><div class="linenodiv"><pre>1
+2</pre></div></td><td class="code"><div class="highlight"><pre><span></span><span class="n">Title</span><span class="o">:</span> <span class="n">My</span> <span class="n">Article</span> <span class="n">or</span> <span class="n">Page</span> <span class="n">Title</span>
+<span class="n">pcs</span><span class="o">:</span> <span class="n">hidden</span>
+</pre></div>
+</td></tr></table>
+
+<p>Example: <a href="../../posts/2017/March/27/article-hidden/">Article with hidden comments</a>
+</p>
+</div>
+</section>
+        <section id="extras" class="body">
+                <div class="social">
+                        <h2>social</h2>
+                        <ul>
+                            <li><a href="https://scheirle.github.io/pelican_comment_system/feeds/all.atom.xml" type="application/atom+xml" rel="alternate">atom feed</a></li>
+
+                        </ul>
+                </div><!-- /.social -->
+        </section><!-- /#extras -->
+
+        <footer id="contentinfo" class="body">
+                <address id="about" class="vcard body">
+                Proudly powered by <a href="http://getpelican.com/">Pelican</a>, which takes great advantage of <a href="http://python.org">Python</a>.
+                </address><!-- /#about -->
+
+                <p>The theme is by <a href="http://coding.smashingmagazine.com/2009/08/04/designing-a-html-5-layout-from-scratch/">Smashing Magazine</a>, thanks!</p>
+        </footer><!-- /#contentinfo -->
+
+<script>
+	function openTab(evt, tab_group, tab_name) {
+		var i, tabcontent, tablinks;
+		tabcontent = document.getElementsByClassName(tab_group + " tabcontent");
+		for (i = 0; i < tabcontent.length; i++)
+		{
+			tabcontent[i].style.display = "none";
+		}
+		tablinks = document.getElementsByClassName(tab_group + " tablinks");
+		for (i = 0; i < tablinks.length; i++)
+		{
+			tablinks[i].className = tablinks[i].className.replace(" active", "");
+		}
+		document.getElementById(tab_name).style.display = "block";
+		evt.currentTarget.className += " active";
+	}
+
+	// Get the elements with class="default_open" and click on it
+	var open_tabs = document.getElementsByClassName("default_open");
+	for (i = 0; i < open_tabs.length; i++)
+	{
+		open_tabs[i].click();
+	}
+</script>
+</body>
+</html>

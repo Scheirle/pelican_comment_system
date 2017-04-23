@@ -1,0 +1,115 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+        <meta charset="utf-8" />
+        <title>Pelican Comment System</title>
+        <link rel="stylesheet" href="./theme/css/main.css" />
+        <link rel="stylesheet" href="./theme/css/tabs.css" />
+        <link href="https://scheirle.github.io/pelican_comment_system/feeds/all.atom.xml" type="application/atom+xml" rel="alternate" title="Pelican Comment System Atom Feed" />
+
+        <!--[if IE]>
+            <script src="https://html5shiv.googlecode.com/svn/trunk/html5.js"></script>
+        <![endif]-->
+</head>
+
+<body id="index" class="home">
+        <header id="banner" class="body">
+                <h1><a href="./">Pelican Comment System </a></h1>
+                <nav><ul>
+                    <li><a href="https://scheirle.github.io/pelican_comment_system">Home</a></li>
+                    <li><a href="https://scheirle.github.io/pelican_comment_system/category/blog/">Blog/News</a></li>
+                    <li><a href="https://github.com/Scheirle/pelican_comment_system">GitHub</a></li>
+                </ul></nav>
+        </header><!-- /#banner -->
+<section id="content" class="body">
+    <h1 class="entry-title">Pelican Comment System</h1>
+    
+    <p><img alt="." src="https://img.shields.io/badge/Pelican-Plugin-green.svg" title="Pelican Plugin">
+<img alt="." src="https://img.shields.io/badge/Pelican_Version-3.4_and_newer-yellowgreen.svg" title="Pelican Version 3.4 and newer">
+<a href="https://pypi.python.org/pypi/pelican_comment_system"><img alt="." src="https://img.shields.io/pypi/v/pelican_comment_system.svg" title="PyPI: the Python Package Index"></a>
+<img alt="." src="https://img.shields.io/maintenance/yes/2017.svg" title="Maintenance shield"></p>
+<p>Pelican Comment System is a plugin for <a href="https://blog.getpelican.com">pelican</a>
+and allows you to add <strong>static</strong> comments to your articles and pages.</p>
+<p>Comments are stored in files in formats that can be processed by Pelican (e.g., Markdown and reStructuredText).
+Each comment resides in its own file.</p>
+<h2 id="features">Features</h2>
+<ul>
+<li>Static comments for each article/page</li>
+<li>Replies to comments</li>
+<li>Avatars and <a href="https://en.wikipedia.org/wiki/Identicon">Identicons</a></li>
+<li>Comment Atom feed for each article/page</li>
+<li>Easy styleable via themes</li>
+<li>Comments can be closed or hidden for each article/page separately</li>
+<li>Supports:<ul>
+<li>Python: 2.7 and 3 (3.3 - 3.6)</li>
+<li>Pelican: 3.4 and newer</li>
+</ul>
+</li>
+</ul>
+<h2 id="instructions">Instructions</h2>
+<ul>
+<li><a href="./pages/getting-started/">Getting Started</a></li>
+<li><a href="./pages/settings/">Settings</a></li>
+<li>Features:<ul>
+<li><a href="./pages/avatars-and-identicons/">Avatars and identicons</a></li>
+<li><a href="./pages/comment-feeds/">Feeds</a></li>
+<li><a href="./pages/closing-or-hidding-comments/">Closing or hidding comments</a></li>
+</ul>
+</li>
+<li><a href="./pages/importing-comments/">Importing Comments</a> [from other Blog/Comment Systems]</li>
+<li>For Developers:<ul>
+<li><a href="./pages/theme-development/">Theme Development</a></li>
+<li><a href="./pages/plugin-development/">Plugin Development</a></li>
+</ul>
+</li>
+</ul>
+<h2 id="requirements">Requirements</h2>
+<ul>
+<li>Pelican 3.4 or newer</li>
+<li>Pillow/PIL [optional, used to create identicons]</li>
+</ul>
+</section>
+        <section id="extras" class="body">
+                <div class="social">
+                        <h2>social</h2>
+                        <ul>
+                            <li><a href="https://scheirle.github.io/pelican_comment_system/feeds/all.atom.xml" type="application/atom+xml" rel="alternate">atom feed</a></li>
+
+                        </ul>
+                </div><!-- /.social -->
+        </section><!-- /#extras -->
+
+        <footer id="contentinfo" class="body">
+                <address id="about" class="vcard body">
+                Proudly powered by <a href="http://getpelican.com/">Pelican</a>, which takes great advantage of <a href="http://python.org">Python</a>.
+                </address><!-- /#about -->
+
+                <p>The theme is by <a href="http://coding.smashingmagazine.com/2009/08/04/designing-a-html-5-layout-from-scratch/">Smashing Magazine</a>, thanks!</p>
+        </footer><!-- /#contentinfo -->
+
+<script>
+	function openTab(evt, tab_group, tab_name) {
+		var i, tabcontent, tablinks;
+		tabcontent = document.getElementsByClassName(tab_group + " tabcontent");
+		for (i = 0; i < tabcontent.length; i++)
+		{
+			tabcontent[i].style.display = "none";
+		}
+		tablinks = document.getElementsByClassName(tab_group + " tablinks");
+		for (i = 0; i < tablinks.length; i++)
+		{
+			tablinks[i].className = tablinks[i].className.replace(" active", "");
+		}
+		document.getElementById(tab_name).style.display = "block";
+		evt.currentTarget.className += " active";
+	}
+
+	// Get the elements with class="default_open" and click on it
+	var open_tabs = document.getElementsByClassName("default_open");
+	for (i = 0; i < open_tabs.length; i++)
+	{
+		open_tabs[i].click();
+	}
+</script>
+</body>
+</html>

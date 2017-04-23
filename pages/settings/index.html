@@ -1,0 +1,191 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+        <meta charset="utf-8" />
+        <title>Settings</title>
+        <link rel="stylesheet" href="../../theme/css/main.css" />
+        <link rel="stylesheet" href="../../theme/css/tabs.css" />
+        <link href="https://scheirle.github.io/pelican_comment_system/feeds/all.atom.xml" type="application/atom+xml" rel="alternate" title="Pelican Comment System Atom Feed" />
+
+        <!--[if IE]>
+            <script src="https://html5shiv.googlecode.com/svn/trunk/html5.js"></script>
+        <![endif]-->
+</head>
+
+<body id="index" class="home">
+        <header id="banner" class="body">
+                <h1><a href="../../">Pelican Comment System </a></h1>
+                <nav><ul>
+                    <li><a href="https://scheirle.github.io/pelican_comment_system">Home</a></li>
+                    <li><a href="https://scheirle.github.io/pelican_comment_system/category/blog/">Blog/News</a></li>
+                    <li><a href="https://github.com/Scheirle/pelican_comment_system">GitHub</a></li>
+                </ul></nav>
+        </header><!-- /#banner -->
+<section id="content" class="body">
+    <h1 class="entry-title">Settings</h1>
+    
+    <p>This plugin has a few settings to fine tune its behaviour.
+Below is the default configuration listed.</p>
+<table class="highlighttable"><tr><td class="linenos"><div class="linenodiv"><pre> 1
+ 2
+ 3
+ 4
+ 5
+ 6
+ 7
+ 8
+ 9
+10
+11
+12
+13
+14
+15
+16
+17</pre></div></td><td class="code"><div class="highlight"><pre><span></span><span class="n">PELICAN_COMMENT_SYSTEM</span> <span class="o">=</span> <span class="p">{</span>
+    <span class="s1">&#39;DIR&#39;</span><span class="p">:</span> <span class="s1">&#39;comments&#39;</span><span class="p">,</span>
+    <span class="s1">&#39;IDENTICON&#39;</span><span class="p">:</span> <span class="p">{</span>
+        <span class="s1">&#39;OUTPUT_PATH&#39;</span><span class="p">:</span> <span class="s1">&#39;images/identicon&#39;</span><span class="p">,</span>
+        <span class="s1">&#39;DATA&#39;</span><span class="p">:</span> <span class="p">(</span><span class="s1">&#39;author&#39;</span><span class="p">,),</span>
+        <span class="s1">&#39;SIZE&#39;</span><span class="p">:</span> <span class="mi">72</span><span class="p">,</span>
+    <span class="p">},</span>
+    <span class="s1">&#39;AUTHORS&#39;</span><span class="p">:</span>  <span class="p">{},</span>
+    <span class="s1">&#39;FEED&#39;</span><span class="p">:</span>     <span class="n">os</span><span class="o">.</span><span class="n">path</span><span class="o">.</span><span class="n">join</span><span class="p">(</span><span class="s1">&#39;feeds&#39;</span><span class="p">,</span> <span class="s1">&#39;comment.</span><span class="si">%s</span><span class="s1">.atom.xml&#39;</span><span class="p">),</span>
+    <span class="s1">&#39;FEED_ALL&#39;</span><span class="p">:</span> <span class="n">os</span><span class="o">.</span><span class="n">path</span><span class="o">.</span><span class="n">join</span><span class="p">(</span><span class="s1">&#39;feeds&#39;</span><span class="p">,</span> <span class="s1">&#39;comments.all.atom.xml&#39;</span><span class="p">),</span>
+    <span class="s1">&#39;DEFAULT_STATE&#39;</span><span class="p">:</span> <span class="p">{</span>
+        <span class="s1">&#39;Article&#39;</span><span class="p">:</span> <span class="s1">&#39;open&#39;</span><span class="p">,</span>
+        <span class="s1">&#39;Page&#39;</span><span class="p">:</span>    <span class="s1">&#39;open&#39;</span><span class="p">,</span>
+        <span class="s1">&#39;Draft&#39;</span><span class="p">:</span>   <span class="s1">&#39;closed&#39;</span><span class="p">,</span>
+    <span class="p">}</span>
+<span class="p">}</span>
+<span class="n">COMMENT_URL</span> <span class="o">=</span> <span class="s1">&#39;#comment-{slug}&#39;</span>
+</pre></div>
+</td></tr></table>
+
+<p>If you want to adjust something only specify the keys you change in your <code>pelicanconf.py</code>, e.g.:</p>
+<table class="highlighttable"><tr><td class="linenos"><div class="linenodiv"><pre>1
+2
+3
+4
+5</pre></div></td><td class="code"><div class="highlight"><pre><span></span><span class="n">PELICAN_COMMENT_SYSTEM</span> <span class="o">=</span> <span class="p">{</span>
+    <span class="s1">&#39;DEFAULT_STATE&#39;</span><span class="p">:</span> <span class="p">{</span>
+        <span class="s1">&#39;Page&#39;</span><span class="p">:</span>    <span class="s1">&#39;closed&#39;</span><span class="p">,</span>
+    <span class="p">}</span>
+<span class="p">}</span>
+</pre></div>
+</td></tr></table>
+
+<p>Now everthing not specified will be taken from the default configuration, e.g. the <code>DEFAULT_STATE</code> for articles is still <code>open</code>.</p>
+<h3 id="settings-in-depth">Settings in-depth</h3>
+<div class="tab"><button class="tablinks tabs-processor-id-0 default_open" onclick="openTab(event, 'tabs-processor-id-0', 'tabs-processor-id-1')">DIR</button><button class="tablinks tabs-processor-id-0" onclick="openTab(event, 'tabs-processor-id-0', 'tabs-processor-id-2')">IDENTICON</button><button class="tablinks tabs-processor-id-0" onclick="openTab(event, 'tabs-processor-id-0', 'tabs-processor-id-3')">AUTHORS</button><button class="tablinks tabs-processor-id-0" onclick="openTab(event, 'tabs-processor-id-0', 'tabs-processor-id-4')">FEED</button><button class="tablinks tabs-processor-id-0" onclick="openTab(event, 'tabs-processor-id-0', 'tabs-processor-id-5')">FEED_ALL</button><button class="tablinks tabs-processor-id-0" onclick="openTab(event, 'tabs-processor-id-0', 'tabs-processor-id-6')">DEFAULT_STATE</button><button class="tablinks tabs-processor-id-0" onclick="openTab(event, 'tabs-processor-id-0', 'tabs-processor-id-7')">COMMENT_URL</button></div>
+<div class="tabcontent tabs-processor-id-0" id="tabs-processor-id-1">
+<p>Folder where the comments are stored, relative to <code>PATH</code>.</p>
+<hr>
+
+<p>In a default pelican installation <code>PATH</code> points to <code>./content/</code> and therefore <code>DIR</code> to <code>./content/comments/</code>.</p>
+<p><strong>Pro:</strong> You don't have to exclude the <code>DIR</code> from the articles or pages path, the Pelican Comment System already handles that.</p>
+</div>
+<div class="tabcontent tabs-processor-id-0" id="tabs-processor-id-2">
+<p><code>OUTPUT_PATH</code>:</p>
+<p>Relative URL to the output folder where the identicons get stored.
+<hr></p>
+<p><code>DATA</code>:</p>
+<p>Tuple that contains all metadata tags, which in combination identifie a comment author.</p>
+<p>Only if all metadata are the same, two comment files are treated as if written from the same author.</p>
+<hr>
+
+<p><code>SIZE</code>:</p>
+<p>Width and height of the identicons.
+Has to be a multiple of 3.</p>
+</div>
+<div class="tabcontent tabs-processor-id-0" id="tabs-processor-id-3">
+<p>Comment authors, which should have a specific avatar.
+See also <a href="../../pages/avatars-and-identicons/">Avatars and Identicons</a>.</p>
+<p>Example:</p>
+<table class="highlighttable"><tr><td class="linenos"><div class="linenodiv"><pre>1
+2
+3
+4
+5
+6
+7
+8
+9</pre></div></td><td class="code"><div class="highlight"><pre><span></span><span class="n">PELICAN_COMMENT_SYSTEM</span> <span class="o">=</span> <span class="p">{</span>
+    <span class="s1">&#39;IDENTICON&#39;</span><span class="p">:</span> <span class="p">{</span>
+        <span class="s1">&#39;DATA&#39;</span><span class="p">:</span> <span class="p">(</span><span class="s1">&#39;author&#39;</span><span class="p">,</span> <span class="s1">&#39;email&#39;</span><span class="p">,)</span>
+    <span class="p">}</span>
+    <span class="s1">&#39;AUTHORS&#39;</span><span class="p">:</span>  <span class="p">{</span>
+        <span class="p">(</span><span class="s1">&#39;John&#39;</span><span class="p">,</span><span class="s1">&#39;john@example.com&#39;</span><span class="p">,):</span> <span class="s2">&quot;images/authors/john.png&quot;</span><span class="p">,</span>
+        <span class="p">(</span><span class="s1">&#39;Tom&#39;</span><span class="p">,</span><span class="s1">&#39;tom@example.org&#39;</span><span class="p">,):</span> <span class="s2">&quot;images/authors/tom.png&quot;</span><span class="p">,</span>
+    <span class="p">}</span>
+<span class="p">}</span>
+</pre></div>
+</td></tr></table>
+
+<p>No identicons will be created for the comment authors John (john@example.com) and Tom (tom@example.org).
+Instead the specified avatar will be used.</p>
+</div>
+<div class="tabcontent tabs-processor-id-0" id="tabs-processor-id-4">
+<p>Relative URL to output the Atom feeds (one feed per article).
+<code>%s</code> gets replaced with the slug of the article.</p>
+<p>Set to <code>None</code> to disable the feeds.</p>
+</div>
+<div class="tabcontent tabs-processor-id-0" id="tabs-processor-id-5">
+<p>Relative URL to output the all-comments Atom feed.</p>
+<p>Set to <code>None</code> to disable this feed.</p>
+</div>
+<div class="tabcontent tabs-processor-id-0" id="tabs-processor-id-6">
+<p>Default state for articles, pages and drafts.
+Valid values are: <code>open</code>, <code>closed</code> and <code>hidden</code></p>
+<p>See <a href="../../pages/closing-or-hidding-comments/">Closing or hidding comments</a>.</p>
+</div>
+<div class="tabcontent tabs-processor-id-0" id="tabs-processor-id-7">
+<p><code>{slug}</code> gets replaced with the slug of the comment.</p>
+<p>This URL has to match the html ids of the comments in your theme.
+Example: <a href="../../pages/comment-feeds/">Feeds</a></p>
+</div>
+</section>
+        <section id="extras" class="body">
+                <div class="social">
+                        <h2>social</h2>
+                        <ul>
+                            <li><a href="https://scheirle.github.io/pelican_comment_system/feeds/all.atom.xml" type="application/atom+xml" rel="alternate">atom feed</a></li>
+
+                        </ul>
+                </div><!-- /.social -->
+        </section><!-- /#extras -->
+
+        <footer id="contentinfo" class="body">
+                <address id="about" class="vcard body">
+                Proudly powered by <a href="http://getpelican.com/">Pelican</a>, which takes great advantage of <a href="http://python.org">Python</a>.
+                </address><!-- /#about -->
+
+                <p>The theme is by <a href="http://coding.smashingmagazine.com/2009/08/04/designing-a-html-5-layout-from-scratch/">Smashing Magazine</a>, thanks!</p>
+        </footer><!-- /#contentinfo -->
+
+<script>
+	function openTab(evt, tab_group, tab_name) {
+		var i, tabcontent, tablinks;
+		tabcontent = document.getElementsByClassName(tab_group + " tabcontent");
+		for (i = 0; i < tabcontent.length; i++)
+		{
+			tabcontent[i].style.display = "none";
+		}
+		tablinks = document.getElementsByClassName(tab_group + " tablinks");
+		for (i = 0; i < tablinks.length; i++)
+		{
+			tablinks[i].className = tablinks[i].className.replace(" active", "");
+		}
+		document.getElementById(tab_name).style.display = "block";
+		evt.currentTarget.className += " active";
+	}
+
+	// Get the elements with class="default_open" and click on it
+	var open_tabs = document.getElementsByClassName("default_open");
+	for (i = 0; i < open_tabs.length; i++)
+	{
+		open_tabs[i].click();
+	}
+</script>
+</body>
+</html>

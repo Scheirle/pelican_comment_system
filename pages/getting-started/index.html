@@ -1,0 +1,270 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+        <meta charset="utf-8" />
+        <title>Getting Started</title>
+        <link rel="stylesheet" href="../../theme/css/main.css" />
+        <link rel="stylesheet" href="../../theme/css/tabs.css" />
+        <link href="https://scheirle.github.io/pelican_comment_system/feeds/all.atom.xml" type="application/atom+xml" rel="alternate" title="Pelican Comment System Atom Feed" />
+
+        <!--[if IE]>
+            <script src="https://html5shiv.googlecode.com/svn/trunk/html5.js"></script>
+        <![endif]-->
+</head>
+
+<body id="index" class="home">
+        <header id="banner" class="body">
+                <h1><a href="../../">Pelican Comment System </a></h1>
+                <nav><ul>
+                    <li><a href="https://scheirle.github.io/pelican_comment_system">Home</a></li>
+                    <li><a href="https://scheirle.github.io/pelican_comment_system/category/blog/">Blog/News</a></li>
+                    <li><a href="https://github.com/Scheirle/pelican_comment_system">GitHub</a></li>
+                </ul></nav>
+        </header><!-- /#banner -->
+<section id="content" class="body">
+    <h1 class="entry-title">Getting Started</h1>
+    
+    <div class="toc"><span class="toctitle">Table of contents</span><ul>
+<li><a href="#installation">Installation</a><ul>
+<li><a href="#theme">Theme</a></li>
+</ul>
+</li>
+<li><a href="#adding-a-comment-to-an-article-or-page">Adding a comment to an article or page</a><ul>
+<li><a href="#folder-structure">Folder structure</a><ul>
+<li><a href="#example">Example</a></li>
+</ul>
+</li>
+<li><a href="#comment-file">Comment file</a><ul>
+<li><a href="#meta-data">Meta data</a><ul>
+<li><a href="#example-of-a-markdown-comment-file">Example of a (markdown) comment file</a></li>
+</ul>
+</li>
+</ul>
+</li>
+</ul>
+</li>
+</ul>
+</div>
+<h2 id="installation">Installation</h2>
+<p>You can either use <code>pip</code>, <code>git</code> or manually download this plugin:</p>
+<div class="tab"><button class="tablinks tabs-processor-id-0 default_open" onclick="openTab(event, 'tabs-processor-id-0', 'tabs-processor-id-1')">Pip</button><button class="tablinks tabs-processor-id-0" onclick="openTab(event, 'tabs-processor-id-0', 'tabs-processor-id-2')">Git</button><button class="tablinks tabs-processor-id-0" onclick="openTab(event, 'tabs-processor-id-0', 'tabs-processor-id-3')">Download</button></div>
+<div class="tabcontent tabs-processor-id-0" id="tabs-processor-id-1">
+<p>Execute:</p>
+<table class="highlighttable"><tr><td class="linenos"><div class="linenodiv"><pre>1</pre></div></td><td class="code"><div class="highlight"><pre><span></span>pip install pelican_comment_system
+</pre></div>
+</td></tr></table>
+
+<p>Changes in <code>pelicanconf.py</code>:</p>
+<table class="highlighttable"><tr><td class="linenos"><div class="linenodiv"><pre>1</pre></div></td><td class="code"><div class="highlight"><pre><span></span><span class="n">PLUGINS</span> <span class="o">=</span> <span class="p">[</span><span class="s1">&#39;pelican_comment_system&#39;</span><span class="p">]</span>
+</pre></div>
+</td></tr></table>
+
+</div>
+<div class="tabcontent tabs-processor-id-0" id="tabs-processor-id-2">
+<p>Execute:</p>
+<table class="highlighttable"><tr><td class="linenos"><div class="linenodiv"><pre>1
+2</pre></div></td><td class="code"><div class="highlight"><pre><span></span><span class="nb">cd</span> your_plugin_folder
+git clone <span class="s2">&quot;git@github.com:Scheirle/pelican_comment_system.git&quot;</span>
+</pre></div>
+</td></tr></table>
+
+<p>[Optional]</p>
+<table class="highlighttable"><tr><td class="linenos"><div class="linenodiv"><pre>1</pre></div></td><td class="code"><div class="highlight"><pre><span></span>pip install Pillow
+</pre></div>
+</td></tr></table>
+
+<p>Changes in <code>pelicanconf.py</code>:</p>
+<table class="highlighttable"><tr><td class="linenos"><div class="linenodiv"><pre>1
+2</pre></div></td><td class="code"><div class="highlight"><pre><span></span><span class="n">PLUGIN_PATHS</span> <span class="o">=</span> <span class="p">[</span><span class="s1">&#39;your_plugin_folder&#39;</span><span class="p">]</span>
+<span class="n">PLUGINS</span> <span class="o">=</span> <span class="p">[</span><span class="s1">&#39;pelican_comment_system&#39;</span><span class="p">]</span>
+</pre></div>
+</td></tr></table>
+
+</div>
+<div class="tabcontent tabs-processor-id-0" id="tabs-processor-id-3">
+<p>Manually download the plugin from: <a href="https://github.com/Scheirle/pelican_comment_system/releases">https://github.com/Scheirle/pelican_comment_system/releases</a>
+and extract it into your plugin folder.</p>
+<p>[Optional]</p>
+<table class="highlighttable"><tr><td class="linenos"><div class="linenodiv"><pre>1</pre></div></td><td class="code"><div class="highlight"><pre><span></span>pip install Pillow
+</pre></div>
+</td></tr></table>
+
+<p>Changes in <code>pelicanconf.py</code>:</p>
+<table class="highlighttable"><tr><td class="linenos"><div class="linenodiv"><pre>1
+2</pre></div></td><td class="code"><div class="highlight"><pre><span></span><span class="n">PLUGIN_PATHS</span> <span class="o">=</span> <span class="p">[</span><span class="s1">&#39;your_plugin_folder&#39;</span><span class="p">]</span>
+<span class="n">PLUGINS</span> <span class="o">=</span> <span class="p">[</span><span class="s1">&#39;pelican_comment_system&#39;</span><span class="p">]</span>
+</pre></div>
+</td></tr></table>
+
+</div>
+<h3 id="theme">Theme</h3>
+<p>Your theme needs to support the Pelican Comment System so the comments can be displayed on your site.
+You can either use a theme with already built-in support or easily extend your current theme.</p>
+<div class="tab"><button class="tablinks tabs-processor-id-4 default_open" onclick="openTab(event, 'tabs-processor-id-4', 'tabs-processor-id-5')">Extend your current theme</button><button class="tablinks tabs-processor-id-4" onclick="openTab(event, 'tabs-processor-id-4', 'tabs-processor-id-6')">Themes with built-in support</button></div>
+<div class="tabcontent tabs-processor-id-4" id="tabs-processor-id-5">
+<p>Execute:</p>
+<table class="highlighttable"><tr><td class="linenos"><div class="linenodiv"><pre>1
+2
+3
+4
+5
+6</pre></div></td><td class="code"><div class="highlight"><pre><span></span><span class="nb">cd</span> your_theme_folder
+mkdir -p ./static/js
+mkdir -p ./templates/pcs
+
+wget --directory-prefix<span class="o">=</span><span class="s2">&quot;./static/js&quot;</span> <span class="s2">&quot;https://raw.githubusercontent.com/Scheirle/pelican_comment_system/master/theme/static/js/comments.js&quot;</span>
+wget --directory-prefix<span class="o">=</span><span class="s2">&quot;./templates/pcs&quot;</span> <span class="s2">&quot;https://raw.githubusercontent.com/Scheirle/pelican_comment_system/master/theme/templates/pcs/comments.html&quot;</span>
+</pre></div>
+</td></tr></table>
+
+<p>Modify your <code>./templates/article.html</code> template:</p>
+<ol>
+<li>Add <code>{% import 'pcs/comments.html' as pcs with context %}</code> to the top of the file.</li>
+<li>Add <code>{{ pcs.comments_quickstart("emailuser", "example.com") }}</code> where you want the comments to be displayed.
+   For most themes right below <code>{{ article.content }}</code> is a good place.</li>
+<li>Replace <code>emailuser</code> and <code>example.com</code> with your e-mail address: <code>emailuser@example.com</code></li>
+</ol>
+<p>And that's it!
+Your site is now ready to display comments.</p>
+<p>For an in-depth guide see: <a href="../../pages/theme-development/">Guide for theme developers</a></p>
+</div>
+<div class="tabcontent tabs-processor-id-4" id="tabs-processor-id-6">
+<p>Just install the theme as noted by the theme author and you are ready to go.</p>
+<p>List of themes with Pelican Comment System support:</p>
+<ul>
+<li><a href="https://github.com/MinchinWeb/seafoam">Seafoam</a></li>
+</ul>
+</div>
+<h2 id="adding-a-comment-to-an-article-or-page">Adding a comment to an article or page</h2>
+<h3 id="folder-structure">Folder structure</h3>
+<ul>
+<li>Every comment gets stored in its own file. The filename does not matter.</li>
+<li>All comments of the same Article/Page are located in the same folder.</li>
+<li>The folder name is equal to the slug of the Article/Page.</li>
+<li>All these folders have to be placed in <code>content/comments/</code>.</li>
+</ul>
+<h4 id="example">Example</h4>
+<p>All comments of the article <code>foo-bar</code> must be placed in <code>content/comments/foo-bar/</code>.</p>
+<p>Below is an example folder structure listed with two articles and a total of five comments.</p>
+<table class="highlighttable"><tr><td class="linenos"><div class="linenodiv"><pre> 1
+ 2
+ 3
+ 4
+ 5
+ 6
+ 7
+ 8
+ 9
+10
+11</pre></div></td><td class="code"><div class="highlight"><pre><span></span>content
+├── comments
+│   └── foo-bar
+│   │   ├── 1.md
+│   │   └── 0.md
+│   └── some-other-slug
+│       ├── random-Name.md
+│       ├── 1.rst
+│       └── 0.md
+├── foo-bar.md
+└── some-other-slug.md
+</pre></div>
+</td></tr></table>
+
+<p>(The path <code>content/comments/</code> can be changed via the settings, see <a href="../../pages/settings/">In-depth Settings</a>)</p>
+<h3 id="comment-file">Comment file</h3>
+<p>The comment file itself is very similar to an article or page file and therefore it can be in any format pelican supports.
+The only difference is the meta data.</p>
+<h4 id="meta-data">Meta data</h4>
+<table>
+<thead>
+<tr>
+<th>Tag</th>
+<th>Required</th>
+<th>Description</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td><code>date</code></td>
+<td>yes</td>
+<td>Date when the comment was posted</td>
+</tr>
+<tr>
+<td><code>author</code></td>
+<td>yes</td>
+<td>Name of the comment author</td>
+</tr>
+<tr>
+<td><code>slug</code></td>
+<td>no</td>
+<td>Slug of the comment. If not present it will be computed from the file name (including the extension)</td>
+</tr>
+<tr>
+<td><code>replyto</code></td>
+<td>no</td>
+<td>Slug of the parent comment</td>
+</tr>
+</tbody>
+</table>
+<p>Every other (custom) tag gets parsed as well and will be available through the theme.</p>
+<h5 id="example-of-a-markdown-comment-file">Example of a (markdown) comment file</h5>
+<table class="highlighttable"><tr><td class="linenos"><div class="linenodiv"><pre>1
+2
+3
+4
+5
+6
+7</pre></div></td><td class="code"><div class="highlight"><pre><span></span><span class="n">date</span><span class="o">:</span> <span class="mi">2014</span><span class="o">-</span><span class="mi">3</span><span class="o">-</span><span class="mi">21</span> <span class="mi">15</span><span class="o">:</span><span class="mi">02</span>
+<span class="n">author</span><span class="o">:</span> <span class="n">Author</span> <span class="n">of</span> <span class="n">the</span> <span class="n">comment</span>
+<span class="n">website</span><span class="o">:</span> <span class="n">http</span><span class="o">://</span><span class="n">authors</span><span class="o">.</span><span class="na">website</span><span class="o">.</span><span class="na">com</span>
+<span class="n">replyto</span><span class="o">:</span> <span class="mi">1</span><span class="n">md</span>
+<span class="n">anothermetatag</span><span class="o">:</span> <span class="n">some</span> <span class="n">random</span> <span class="n">tag</span>
+
+<span class="n">Content</span> <span class="n">of</span> <span class="n">the</span> <span class="n">comment</span><span class="o">.</span>
+</pre></div>
+</td></tr></table>
+</section>
+        <section id="extras" class="body">
+                <div class="social">
+                        <h2>social</h2>
+                        <ul>
+                            <li><a href="https://scheirle.github.io/pelican_comment_system/feeds/all.atom.xml" type="application/atom+xml" rel="alternate">atom feed</a></li>
+
+                        </ul>
+                </div><!-- /.social -->
+        </section><!-- /#extras -->
+
+        <footer id="contentinfo" class="body">
+                <address id="about" class="vcard body">
+                Proudly powered by <a href="http://getpelican.com/">Pelican</a>, which takes great advantage of <a href="http://python.org">Python</a>.
+                </address><!-- /#about -->
+
+                <p>The theme is by <a href="http://coding.smashingmagazine.com/2009/08/04/designing-a-html-5-layout-from-scratch/">Smashing Magazine</a>, thanks!</p>
+        </footer><!-- /#contentinfo -->
+
+<script>
+	function openTab(evt, tab_group, tab_name) {
+		var i, tabcontent, tablinks;
+		tabcontent = document.getElementsByClassName(tab_group + " tabcontent");
+		for (i = 0; i < tabcontent.length; i++)
+		{
+			tabcontent[i].style.display = "none";
+		}
+		tablinks = document.getElementsByClassName(tab_group + " tablinks");
+		for (i = 0; i < tablinks.length; i++)
+		{
+			tablinks[i].className = tablinks[i].className.replace(" active", "");
+		}
+		document.getElementById(tab_name).style.display = "block";
+		evt.currentTarget.className += " active";
+	}
+
+	// Get the elements with class="default_open" and click on it
+	var open_tabs = document.getElementsByClassName("default_open");
+	for (i = 0; i < open_tabs.length; i++)
+	{
+		open_tabs[i].click();
+	}
+</script>
+</body>
+</html>

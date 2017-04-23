@@ -1,0 +1,108 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+        <meta charset="utf-8" />
+        <title>Avatars and Identicons</title>
+        <link rel="stylesheet" href="../../theme/css/main.css" />
+        <link rel="stylesheet" href="../../theme/css/tabs.css" />
+        <link href="https://scheirle.github.io/pelican_comment_system/feeds/all.atom.xml" type="application/atom+xml" rel="alternate" title="Pelican Comment System Atom Feed" />
+
+        <!--[if IE]>
+            <script src="https://html5shiv.googlecode.com/svn/trunk/html5.js"></script>
+        <![endif]-->
+</head>
+
+<body id="index" class="home">
+        <header id="banner" class="body">
+                <h1><a href="../../">Pelican Comment System </a></h1>
+                <nav><ul>
+                    <li><a href="https://scheirle.github.io/pelican_comment_system">Home</a></li>
+                    <li><a href="https://scheirle.github.io/pelican_comment_system/category/blog/">Blog/News</a></li>
+                    <li><a href="https://github.com/Scheirle/pelican_comment_system">GitHub</a></li>
+                </ul></nav>
+        </header><!-- /#banner -->
+<section id="content" class="body">
+    <h1 class="entry-title">Avatars and Identicons</h1>
+    
+    <p>For avatars and <a href="https://en.wikipedia.org/wiki/Identicon">identicons</a> support the Python Image Library (<code>PIL</code> or <code>Pillow</code>) is required.
+Make sure it is installed: <code>pip install Pillow</code></p>
+<p>By default the Pelican Comment System treats all comments with the same <code>author</code> tag as if written from the same person.
+And therefore uses the same avatar/identicon for these comments.
+See also <a href="../../pages/settings/">In-depth Settings</a>.</p>
+<h2 id="specific-avatars">Specific Avatars</h2>
+<p>To set a specific avatar for a author you have to add them to the <code>PELICAN_COMMENT_SYSTEM['AUTHORS']</code> dictionary.</p>
+<p>The <code>key</code> of the dictionary has to be a tuple of the form of <code>PELICAN_COMMENT_SYSTEM['IDENTICON']['DATA']</code>.</p>
+<p>The <code>value</code> of the dictionary is the path to the specific avatar.</p>
+<h5 id="example">Example</h5>
+<table class="highlighttable"><tr><td class="linenos"><div class="linenodiv"><pre>1
+2
+3
+4
+5
+6</pre></div></td><td class="code"><div class="highlight"><pre><span></span><span class="n">PELICAN_COMMENT_SYSTEM</span> <span class="o">=</span> <span class="p">{</span>
+    <span class="s1">&#39;AUTHORS&#39;</span><span class="p">:</span> <span class="p">{</span>
+        <span class="p">(</span><span class="s1">&#39;John&#39;</span><span class="p">,):</span> <span class="s2">&quot;images/authors/john.png&quot;</span><span class="p">,</span>
+        <span class="p">(</span><span class="s1">&#39;Tom&#39;</span><span class="p">,):</span> <span class="s2">&quot;images/authors/tom.png&quot;</span><span class="p">,</span>
+    <span class="p">}</span>
+<span class="p">}</span>
+</pre></div>
+</td></tr></table>
+
+<h2 id="theme">Theme</h2>
+<p>To display the avatars and identicons simply add the following in the "comment for loop" in your theme:</p>
+<table class="highlighttable"><tr><td class="linenos"><div class="linenodiv"><pre>1
+2
+3
+4</pre></div></td><td class="code"><div class="highlight"><pre><span></span><span class="p">&lt;</span><span class="nt">img</span> <span class="na">src</span><span class="o">=</span><span class="s">&quot;{{ SITEURL }}/{{ comment.avatar }}&quot;</span>
+        <span class="na">alt</span><span class="o">=</span><span class="s">&quot;Avatar&quot;</span>
+        <span class="na">height</span><span class="o">=</span><span class="s">&quot;{{ PELICAN_COMMENT_SYSTEM_IDENTICON_SIZE }}&quot;</span>
+        <span class="na">width</span><span class="o">=</span><span class="s">&quot;{{ PELICAN_COMMENT_SYSTEM_IDENTICON_SIZE }}&quot;</span><span class="p">&gt;</span>
+</pre></div>
+</td></tr></table>
+
+<p>Of cause the <code>height</code> and <code>width</code> are optional, but they make sure that everything has the same size (in particular  specific avatars).</p>
+</section>
+        <section id="extras" class="body">
+                <div class="social">
+                        <h2>social</h2>
+                        <ul>
+                            <li><a href="https://scheirle.github.io/pelican_comment_system/feeds/all.atom.xml" type="application/atom+xml" rel="alternate">atom feed</a></li>
+
+                        </ul>
+                </div><!-- /.social -->
+        </section><!-- /#extras -->
+
+        <footer id="contentinfo" class="body">
+                <address id="about" class="vcard body">
+                Proudly powered by <a href="http://getpelican.com/">Pelican</a>, which takes great advantage of <a href="http://python.org">Python</a>.
+                </address><!-- /#about -->
+
+                <p>The theme is by <a href="http://coding.smashingmagazine.com/2009/08/04/designing-a-html-5-layout-from-scratch/">Smashing Magazine</a>, thanks!</p>
+        </footer><!-- /#contentinfo -->
+
+<script>
+	function openTab(evt, tab_group, tab_name) {
+		var i, tabcontent, tablinks;
+		tabcontent = document.getElementsByClassName(tab_group + " tabcontent");
+		for (i = 0; i < tabcontent.length; i++)
+		{
+			tabcontent[i].style.display = "none";
+		}
+		tablinks = document.getElementsByClassName(tab_group + " tablinks");
+		for (i = 0; i < tablinks.length; i++)
+		{
+			tablinks[i].className = tablinks[i].className.replace(" active", "");
+		}
+		document.getElementById(tab_name).style.display = "block";
+		evt.currentTarget.className += " active";
+	}
+
+	// Get the elements with class="default_open" and click on it
+	var open_tabs = document.getElementsByClassName("default_open");
+	for (i = 0; i < open_tabs.length; i++)
+	{
+		open_tabs[i].click();
+	}
+</script>
+</body>
+</html>

@@ -1,0 +1,223 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+        <meta charset="utf-8" />
+        <title>Article Open</title>
+        <link rel="stylesheet" href="../../../../../theme/css/main.css" />
+        <link rel="stylesheet" href="../../../../../theme/css/tabs.css" />
+        <link href="https://scheirle.github.io/pelican_comment_system/feeds/all.atom.xml" type="application/atom+xml" rel="alternate" title="Pelican Comment System Atom Feed" />
+
+        <!--[if IE]>
+            <script src="https://html5shiv.googlecode.com/svn/trunk/html5.js"></script>
+        <![endif]-->
+</head>
+
+<body id="index" class="home">
+        <header id="banner" class="body">
+                <h1><a href="../../../../../">Pelican Comment System </a></h1>
+                <nav><ul>
+                    <li><a href="https://scheirle.github.io/pelican_comment_system">Home</a></li>
+                    <li><a href="https://scheirle.github.io/pelican_comment_system/category/blog/">Blog/News</a></li>
+                    <li><a href="https://github.com/Scheirle/pelican_comment_system">GitHub</a></li>
+                </ul></nav>
+        </header><!-- /#banner -->
+<section id="content" class="body">
+  <article>
+    <header>
+      <h1 class="entry-title">
+        <a href="../../../../../posts/2017/March/27/article-open/" rel="bookmark"
+           title="Permalink to Article Open">Article Open</a></h1>
+    </header>
+
+    <div class="entry-content">
+<footer class="post-info">
+        <abbr class="published" title="2017-03-27T00:00:00+02:00">
+                Published: Mon 27 March 2017
+        </abbr>
+
+<p>In <a href="../../../../../category/examples/">examples</a>.</p>
+<p>Comments: 2</p>
+
+</footer><!-- /.post-info -->      <p>Open Comments.</p>
+    </div>
+    	<style>
+#pcs-comment-form input,
+#pcs-comment-form textarea {
+	width: 100%;
+}
+#pcs-comment-form-display-replyto {
+	border: solid 1px black;
+	padding: 2px;
+}
+#pcs-comment-form-display-replyto p {
+	margin-top: 0.5em;
+	margin-bottom: 0.5em;
+}
+#pcs-comments ul {
+	list-style: none;
+}
+#pcs-comments .comment-left {
+	display: table-cell;
+	padding-right: 10px;
+}
+#pcs-comments .comment-body {
+	display: table-cell;
+	vertical-align: top;
+	width: 100%;
+}
+</style>
+
+	<section id="pcs-comments">
+	<header>
+		<h2>Comments</h2>
+		<hr/>
+	</header>
+		<ul>
+			<li id="comment-normal-commentmd">
+				<div class="comment-left">
+					<img    src="../../../../../images/identicon/4666fe37576237ff67f0af71b6361e10.png"
+							alt="Avatar"
+							height=""
+							width="">
+				</div>
+				<div class="comment-body">
+					<div style="float:right;">
+						<a role="button" href="../../../../../posts/2017/March/27/article-open/#comment-normal-commentmd" rel="bookmark" title="Permalink to this comment">Permalink</a>
+						<button onclick="CommentSystem.setReply('normal-commentmd', 'CAuthor');">Reply</button>
+					</div>
+					<h4>
+							CAuthor
+					</h4>
+					<p>
+						Posted on
+						<time datetime="2017-02-01T00:00:00+01:00" title="2017-02-01T00:00:00+01:00">Wed 01 February 2017</time>
+					</p>
+					<div class="pcs-comment-content" >
+						<p>Normal Comment</p>
+					</div>
+				</div>
+			</li>
+			<li id="comment-normal-comment2md">
+				<div class="comment-left">
+					<img    src="../../../../../images/identicon/4666fe37576237ff67f0af71b6361e10.png"
+							alt="Avatar"
+							height=""
+							width="">
+				</div>
+				<div class="comment-body">
+					<div style="float:right;">
+						<a role="button" href="../../../../../posts/2017/March/27/article-open/#comment-normal-comment2md" rel="bookmark" title="Permalink to this comment">Permalink</a>
+						<button onclick="CommentSystem.setReply('normal-comment2md', 'CAuthor');">Reply</button>
+					</div>
+					<h4>
+							CAuthor
+					</h4>
+					<p>
+						Posted on
+						<time datetime="2017-02-02T00:00:00+01:00" title="2017-02-02T00:00:00+01:00">Thu 02 February 2017</time>
+					</p>
+					<div class="pcs-comment-content" >
+						<p>Normal Comment</p>
+					</div>
+				</div>
+			</li>
+		</ul>
+	<section>
+	<form id="pcs-comment-form" action="#">
+		<legend>Add a Comment</legend>
+		<input type="hidden" id="pcs-comment-form-input-replyto">
+		<fieldset>
+			<label for="pcs-comment-form-input-name">Name</label>
+			<input  id="pcs-comment-form-input-name" type="text" placeholder="Enter your name or nickname" />
+		</fieldset>
+		<fieldset>
+			<label for="pcs-comment-form-input-website">Website</label>
+			<input  id="pcs-comment-form-input-website" type="text" placeholder="Enter your website (optional)" />
+		</fieldset>
+		<fieldset>
+			<label   for="pcs-comment-form-input-textarea">Your Comment</label>
+			<textarea id="pcs-comment-form-input-textarea" rows="5" style="resize:vertical;" placeholder="Your comment"></textarea>
+			<p>You can use the <a href="https://en.wikipedia.org/wiki/Markdown">Markdown</a> syntax to format your comment.</p>
+			<div style="display: none; " id="pcs-comment-form-display-replyto"></div>
+		</fieldset>
+
+		<button type="submit"
+				id="pcs-comment-form-button-submit"
+				>Post via email</button>
+
+	</form>
+</section>
+
+</section>
+
+			<script type="text/javascript" src="http://code.jquery.com/jquery-2.1.4.min.js"></script>
+	<script type="text/javascript" src="../../../../../theme/js/comments.js"></script>
+	<script type="text/javascript">
+		$(document).ready(function() {
+			CommentSystem.email_user   = "bernhard";
+			CommentSystem.email_domain = "scheirle.de";
+			CommentSystem.display_replyto_html = function(comment_content, article_slug, author) { 
+				return ''
+					+ '<button style="float:right;" onclick="CommentSystem.cancelReply(); return false;" title="Cancel the reply">'
+					+ 	'×'
+					+ '</button>'
+					+ '<p>This comment will be posted as a reply to \'<a title="'+comment_content+'" href="#comment-'+article_slug+'">'+author+'</a>\'</p>';
+			};
+
+			$('#pcs-comment-form').on("submit",
+				function( event )
+				{
+					event.preventDefault();
+					$(location).attr('href', CommentSystem.getMailtoLink("article-open"));
+				}
+			);
+		});
+	</script>
+
+
+  </article>
+</section>
+        <section id="extras" class="body">
+                <div class="social">
+                        <h2>social</h2>
+                        <ul>
+                            <li><a href="https://scheirle.github.io/pelican_comment_system/feeds/all.atom.xml" type="application/atom+xml" rel="alternate">atom feed</a></li>
+
+                        </ul>
+                </div><!-- /.social -->
+        </section><!-- /#extras -->
+
+        <footer id="contentinfo" class="body">
+                <address id="about" class="vcard body">
+                Proudly powered by <a href="http://getpelican.com/">Pelican</a>, which takes great advantage of <a href="http://python.org">Python</a>.
+                </address><!-- /#about -->
+
+                <p>The theme is by <a href="http://coding.smashingmagazine.com/2009/08/04/designing-a-html-5-layout-from-scratch/">Smashing Magazine</a>, thanks!</p>
+        </footer><!-- /#contentinfo -->
+
+<script>
+	function openTab(evt, tab_group, tab_name) {
+		var i, tabcontent, tablinks;
+		tabcontent = document.getElementsByClassName(tab_group + " tabcontent");
+		for (i = 0; i < tabcontent.length; i++)
+		{
+			tabcontent[i].style.display = "none";
+		}
+		tablinks = document.getElementsByClassName(tab_group + " tablinks");
+		for (i = 0; i < tablinks.length; i++)
+		{
+			tablinks[i].className = tablinks[i].className.replace(" active", "");
+		}
+		document.getElementById(tab_name).style.display = "block";
+		evt.currentTarget.className += " active";
+	}
+
+	// Get the elements with class="default_open" and click on it
+	var open_tabs = document.getElementsByClassName("default_open");
+	for (i = 0; i < open_tabs.length; i++)
+	{
+		open_tabs[i].click();
+	}
+</script>
+</body>
+</html>
