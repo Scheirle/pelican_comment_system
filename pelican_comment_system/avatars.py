@@ -33,7 +33,9 @@ _missingAvatars = []
 def _ready():
     if not _initialized:
         logger.warning(_log + "Module not initialized. use init")
-    return _identiconImported and _initialized
+    if not _identicon_data:
+        logger.debug(_log + "No identicon data set")
+    return _identiconImported and _initialized and _identicon_data
 
 
 def init(pelican_output_path, identicon_output_path, identicon_data,
